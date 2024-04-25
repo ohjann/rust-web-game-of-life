@@ -13,13 +13,14 @@ fn main() {
 #[component]
 fn App() -> Element {
     let matrix = Array2::<bool>::from_elem((100, 100), false);
+
     rsx! {
         link { rel: "stylesheet", href: "main.css" }
         div { class: "main", padding: "0.5rem", position: "relative",
              for row in matrix.rows() {
-                 div {  class: "row",
+                 div { class: "row",
                      for col in row {
-                         Square { active: *col }
+                         Square {}
                      }
                  }
              }
@@ -28,9 +29,11 @@ fn App() -> Element {
 }
 
 #[component]
-fn Square(active: bool) -> Element {
-    let active_class = if active { "active" } else { "" };
+fn Square() -> Element {
+    let mut active = use_signal(|| false);
     rsx! {
-        div { class: "square {active_class}" }
+        div { onclick: move |_| {
+            active.set(if active() { false } else { true });
+        }, class: if active() { "square active" } else { "square" } }
     }
 }
