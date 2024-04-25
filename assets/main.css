@@ -1,0 +1,22 @@
+body {
+  background-color: #111216;
+}
+
+.main {
+  width: 100%;
+}
+
+.row {
+  height: 10px;
+}
+
+.square {
+  width: 10px;
+  height: 10px;
+  border: 1px solid yellow;
+  display: inline-block;
+
+  &.active {
+    background-color: yellow;
+  }
+}
