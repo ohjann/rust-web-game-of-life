@@ -75,12 +75,16 @@ fn App() -> Element {
     rsx! {
         link { rel: "stylesheet", href: "main.css" }
         div { class: "main", padding: "0.5rem", position: "relative",
+            button { onclick: move |_| {
+                let new_vec: Vec<bool> = matrix().iter().enumerate().map(|(i, _)| square_state(i, row_length, &*matrix.read())).collect();
+                *matrix.write() = new_vec;
+            }, "NEXT"}
             div { class: "container", max_width: "{row_length*10}px",
                  for (i, &item) in matrix().iter().enumerate() {
                     div { onclick: move |_| {
                         matrix.write()[i] = !item;
                         let state = square_state(i, row_length, &*matrix.read());
-                        // log::info!("{state}");
+                        log::info!("{i} {state}");
                     }, class: if item { "square active" } else { "square" } }
                  }
             }
