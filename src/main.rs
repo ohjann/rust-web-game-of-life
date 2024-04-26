@@ -12,18 +12,17 @@ fn main() {
 
 #[component]
 fn App() -> Element {
-    let matrix = Array2::<bool>::from_elem((100, 100), false);
+    let rowLength = 100;
+    let matrix = vec![false; rowLength * rowLength];
 
     rsx! {
         link { rel: "stylesheet", href: "main.css" }
         div { class: "main", padding: "0.5rem", position: "relative",
-             for row in matrix.rows() {
-                 div { class: "row",
-                     for col in row {
-                         Square {}
-                     }
+            div { class: "container", max_width: "{rowLength*10}px",
+                 for (i, item) in matrix.iter().enumerate() {
+                     Square {}
                  }
-             }
+            }
         }
     }
 }
